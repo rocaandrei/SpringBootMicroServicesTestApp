@@ -7,7 +7,20 @@ public class SpecimenDTO {
 	private String latitude;
 	private String longitude;
 	private String description;
-	
+	private int plantId;
+
+	public SpecimenDTO(int specimenId, String latitude, String longitude, String description, int plantId) {
+		super();
+		this.specimenId = specimenId;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.description = description;
+		this.plantId = plantId;
+	}
+
+	public SpecimenDTO() {
+	}
+
 	public int getSpecimenId() {
 		return specimenId;
 	}
@@ -40,9 +53,30 @@ public class SpecimenDTO {
 		this.description = description;
 	}
 
+	public int getPlantId() {
+		return plantId;
+	}
+
+	public void setPlantId(int plantId) {
+		this.plantId = plantId;
+	}
+
 	@Override
 	public String toString() {
 		return "SpecimenDTO [specimenId=" + specimenId + ", latitude=" + latitude + ", longitude=" + longitude
-				+ ", description=" + description + "]";
+				+ ", description=" + description + ", plantId=" + plantId + "]";
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		boolean result = false;
+		if (obj instanceof SpecimenDTO) {
+			SpecimenDTO incomingSpecimen = (SpecimenDTO) obj;
+			result = incomingSpecimen.getSpecimenId() == this.specimenId;
+		}
+		return result;
+
+	}
+
 }

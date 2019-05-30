@@ -2,12 +2,27 @@ package com.plantplaces.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.plantplaces.dao.ISpecimenDAO;
 import com.plantplaces.dto.PlantDTO;
 import com.plantplaces.dto.SpecimenDTO;
 
 @Component // : Component zice: sunt un tip de date ce poate fi autowired, sunt calificat
 public class SpecimenServiceStub implements ISpecimenService {
+
+	
+	private ISpecimenDAO specimenDAO;
+
+	@Override
+	public ISpecimenDAO getSpecimenDAO() {
+		return specimenDAO;
+	}
+
+	@Override
+	public void setSpecimenDAO(ISpecimenDAO specimenDAO) {
+		this.specimenDAO = specimenDAO;
+	}
 
 	@Override
 	public SpecimenDTO fechById(int id) {
@@ -21,8 +36,10 @@ public class SpecimenServiceStub implements ISpecimenService {
 	}
 
 	@Override
-	public void save(SpecimenDTO specimenDTO) {
+	public boolean save(SpecimenDTO specimenDTO) throws Exception {
 
+		boolean result = specimenDAO.save(specimenDTO);
+		return result;
 	}
 
 	@Override
@@ -42,9 +59,7 @@ public class SpecimenServiceStub implements ISpecimenService {
 
 			matchingPlants.add(plant);
 		}
-		
-		int size = matchingPlants.size();
-
 		return matchingPlants;
 	}
+
 }

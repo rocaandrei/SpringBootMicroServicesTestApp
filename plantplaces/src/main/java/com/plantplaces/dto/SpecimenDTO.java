@@ -1,3 +1,4 @@
+//in pachetul DTO - DATA TRANSFER OBJECT - reprezinta locul unde se regasesc clasele Model
 package com.plantplaces.dto;
 
 public class SpecimenDTO {

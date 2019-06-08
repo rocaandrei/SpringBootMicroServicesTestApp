@@ -1,5 +1,5 @@
 package com.plantplaces.service;
-
+//in pachetul Sevice pui toata logica de business sau serviciul in sine
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import com.plantplaces.dao.ISpecimenDAO;
 import com.plantplaces.dto.PlantDTO;
 import com.plantplaces.dto.SpecimenDTO;
 
-@Component // : Component zice: sunt un tip de date ce poate fi autowired, sunt calificat
+@Component // : Component zice: sunt un tip de date ce poate fi autowired, sunt calificat, cautam ceva ce seamana cu mine (acelasi tip valoare)
 public class SpecimenServiceStub implements ISpecimenService {
 
 	
@@ -54,7 +54,7 @@ public class SpecimenServiceStub implements ISpecimenService {
 			PlantDTO plant = new PlantDTO();
 			plant.setGenus("Cersus");
 			plant.setSpecies("canadensis");
-			plant.setCommon("Earstern Redbud");
+			plant.setCommon("Eastern Redbud");
 			plant.setCultivar("cultivar sometihing");
 
 			matchingPlants.add(plant);

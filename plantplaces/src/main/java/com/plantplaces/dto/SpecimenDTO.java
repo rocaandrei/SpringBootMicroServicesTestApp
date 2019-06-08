@@ -1,4 +1,4 @@
-//in pachetul DTO - DATA TRANSFER OBJECT - reprezinta locul unde se regasesc clasele Model
+//in pachetul DTO - DATA TRANSFER OBJECT - reprezinta locul unde se regasesc clasele Model - POJO Class
 package com.plantplaces.dto;
 
 public class SpecimenDTO {
@@ -63,7 +63,7 @@ public class SpecimenDTO {
 
 	@Override
 	public String toString() {
-		return "SpecimenDTO [specimenId=" + specimenId + ", latitude=" + latitude + ", longitude=" + longitude
+		return "SpecimenDTO [latitude=" + latitude + ", longitude=" + longitude
 				+ ", description=" + description + ", plantId=" + plantId + "]";
 	}
 

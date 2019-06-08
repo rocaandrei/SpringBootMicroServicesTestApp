@@ -1,12 +1,47 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeLeaf.org"><!-- cu linia asta iti injectezi modeul ala din get cum am facut in th:text -->
+<html xmlns:th="http://www.thymeLeaf.org">
+<!-- cu linia asta iti injectezi modeul ala din get cum am facut in th:text -->
 <head>
 <meta charset="ISO-8859-1">
 <title>PlantPlaces.com app test</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-	Welcome to Plant Places!
-	<p> Your specimen is: </p>
-	<p th:text="${specimenDTO}" />
+<!-- reprezinta fragmentul navbar preluat din folder-ul fragments -->
+<div th:replace="fragments/topnav :: navbar"></div>
+
+	<br /> Your specimen is: <p th:text="${specimenDTO}" />
+	<br />
+	<form action="#" th:action="@{/save-specimen}" th:object="${specimenDTO}" method="GET">
+		<div class="input-group input-group-sm mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-sm">Latitude</span>
+			</div>
+			<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" name="latitude" th:field="*{latitude}">
+		</div>
+		<div class="input-group input-group-sm mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-sm">Longitude</span>
+			</div>
+			<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" name="longitude" th:field="*{longitude}">
+		</div>
+	<div class="input-group input-group-sm mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-sm">Description</span>
+			</div>
+			<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" name="description" th:field="*{description}">
+		</div>
+			<div class="input-group input-group-sm mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-sm">Plant Id</span>
+			</div>
+			<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" name="plantId" th:field="*{plantId}">
+		</div>
+		<button type="submit" class="btn btn-outline-success" name="submit" value="0">Submit</button>	
+	</form>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
 </body>
 </html>

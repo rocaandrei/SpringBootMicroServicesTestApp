@@ -6,7 +6,7 @@ import com.plantplaces.dao.ISpecimenDAO;
 import com.plantplaces.dto.PlantDTO;
 import com.plantplaces.dto.SpecimenDTO;
 
-//aici generam CRUD pe SpecimenDTO 
+//aici generam contractul CRUD pe Specimen 
 public interface ISpecimenService {
 
 	/**
@@ -27,7 +27,7 @@ public interface ISpecimenService {
 	 * @param string the search criteria: genus, species, cultivar, or common
 	 * @return a list of matching plants.
 	 */
-	List<PlantDTO> fetchPlants(String string);
+	List<PlantDTO> fetchPlants(String string) throws Exception;
 
 	void setSpecimenDAO(ISpecimenDAO specimenDAO);
 

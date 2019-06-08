@@ -23,7 +23,7 @@
 
 	<dependencies>
 		<dependency>
-			<!-- ne ajuta in datelor din Service/Componenta in View HTML -->
+			<!-- ne ajuta in transmiterea datelor din Service/Componenta in View HTML -->
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
@@ -37,6 +37,34 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Dependinta ce ne ajuta in prerucarea fisierelor de tip JSON -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+
+		<!-- Dependinta mai flexibil in prelucrarea fisierelor de tip JSON cu Retrofit -->
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>retrofit</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
+		<!-- Dependinta ajutatoare pentru adnotarile de tip Gson necesar lui Retrofit -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+
+		<!-- Si cred ca mie imi trebuie si dependinta asta pentru GsonConverterFactory.create()  - imi da eroare altfel in buildul respectiv -->
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>converter-gson</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

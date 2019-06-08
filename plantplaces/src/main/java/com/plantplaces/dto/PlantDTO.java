@@ -1,15 +1,29 @@
 package com.plantplaces.dto;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class PlantDTO {
 
-	private int guid; // Global Unique Identifier = adica id-ul
+	// Global Unique Identifier = adica id-ul
+	@SerializedName("id")
+	@Expose
+	private int guid;
+	@SerializedName("genus")
+	@Expose
 	private String genus;
+	@SerializedName("species")
+	@Expose
 	private String species;
+	@SerializedName("cultivar")
+	@Expose
 	private String cultivar;
+	@SerializedName("common")
+	@Expose
 	private String common;
 
 	public PlantDTO() {
-	
+
 	}
 
 	public PlantDTO(int guid, String genus, String species, String cultivar, String common) {
@@ -61,4 +75,10 @@ public class PlantDTO {
 		this.common = common;
 	}
 
+	@Override
+	public String toString() {
+		return "id: " + guid + ", Genus: " + (genus.equals("")?"N/A":genus) + ", Spacies: " + (species.equals("")?"N/A":species) + ", Cultivar: " + (cultivar.equals("")?"N/A":cultivar)
+				+ ", Common: " + (common.equals("")?"N/A":common);
+	}
+	
 }

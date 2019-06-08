@@ -32,12 +32,14 @@ public class SpecimenServiceTest {
 	// in principiu fortam ca un obiect sa introduca valoare in set
 	@MockBean
 	private ISpecimenDAO specimenDAO_Mock;
+
 	@Before
 	public void setup() throws Exception {
 
 		SpecimenDTO newSpecimen = new SpecimenDTO();
 		newSpecimen.setDescription("A beautifull Redbud I planted myself.");
-		newSpecimen.setSpecimenId(83);//ca sa treaca testul trebuie ca valoarea de aici trebie sa fie equal cu valoarea din whenUserAddsTestDetails();
+		newSpecimen.setSpecimenId(83);// ca sa treaca testul trebuie ca valoarea de aici trebie sa fie equal cu
+										// valoarea din whenUserAddsTestDetails();
 
 		// acum trebuie sa ii spunem ce sa faca, pentru a putea returna true in try
 		// catch-ul din metoda thenSpecimenIsSaved()
@@ -64,9 +66,44 @@ public class SpecimenServiceTest {
 
 	}
 
+	@Test
+	public void fetchPlantsValidateResultsForCercis() {
+
+		givenUserIsLoggedInToMyPlantDiary();
+		whenTheUserSearchesForCercis();
+		thenMyPlantDiaryReturnsEasternRedbud();
+
+	}
+
+	private void thenMyPlantDiaryReturnsEasternRedbud() {
+
+		boolean redbudFound = false;
+		for (PlantDTO plantDTO : plants) {
+			if (plantDTO.getCommon().contains("Eastern Redbud")) {
+				redbudFound = true;
+			}
+		}
+		assertTrue(redbudFound);
+	}
+
+	private void whenTheUserSearchesForCercis() {
+		try {
+			plants = specimenService.fetchPlants("Cercis");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	private void whenUserSercheadForEasterRedbud() {
 
-		plants = specimenService.fetchPlants("Eartern Redbud");
+		try {
+			plants = specimenService.fetchPlants("Eartern Redbud");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void whenUserAddsTestDetails() {
@@ -74,7 +111,7 @@ public class SpecimenServiceTest {
 		specimen = new SpecimenDTO();
 		PlantDTO plant = plants.get(0);
 		specimen.setPlantId(plant.getGuid());
-		specimen.setDescription("A beautifull Redbud I planted myself.");
+		specimen.setDescription("A beautifull Eastern Redbud I planted myself.");
 		specimen.setSpecimenId(83);
 
 	}
@@ -96,7 +133,12 @@ public class SpecimenServiceTest {
 	}
 
 	public void whenTheUserSearchesForJunk() {
-		plants = specimenService.fetchPlants("khjsd;34lsak:sf3sd;ds;de");
+		try {
+			plants = specimenService.fetchPlants("khjsd;34lsak:sf3sd;ds;de");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void thenMyPlantDiaryReturnsZeroResults() {

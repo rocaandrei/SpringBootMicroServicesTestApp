@@ -36,7 +36,7 @@ public class SpecimenServiceStub implements ISpecimenService {
 	}
 
 	@Override
-	public boolean save(SpecimenDTO specimenDTO) throws Exception {
+	public boolean saveSpecimen(SpecimenDTO specimenDTO) throws Exception {
 
 		boolean result = specimenDAO.save(specimenDTO);
 		return result;
@@ -60,6 +60,12 @@ public class SpecimenServiceStub implements ISpecimenService {
 			matchingPlants.add(plant);
 		}
 		return matchingPlants;
+	}
+
+	@Override
+	public Iterable<SpecimenDTO> fechAllSpecimens() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

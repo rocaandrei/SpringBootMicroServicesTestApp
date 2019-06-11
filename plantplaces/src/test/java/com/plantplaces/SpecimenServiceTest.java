@@ -118,7 +118,7 @@ public class SpecimenServiceTest {
 
 	private void thenSpecimenIsSaved() {
 		try {
-			boolean result = specimenService.save(specimen);
+			boolean result = specimenService.saveSpecimen(specimen);
 
 			// daca am ajuns pana la linia asta testul trece!
 			assertTrue(result);

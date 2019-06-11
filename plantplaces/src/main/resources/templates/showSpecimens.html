@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<!-- cu linia asta iti injectezi modeul ala din get cum am facut in th:text -->
+<head>
+<meta charset="ISO-8859-1">
+<title>PlantPlaces.com app test</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+	<!-- reprezinta fragmentul navbar preluat din folder-ul fragments -->
+	<div th:replace="fragments/topnav :: navbar"></div>
+	<br />
+	<ul class="list-group" th:each="specimen : ${allSpecimens}">
+		<!-- mai jos adaugam o valoare in th:href care o sa ne pointeze catre o referinta exacta din lista -->
+		<li class="list-group-item">
+			<div class="text-success" th:text="${specimen}"></div>
+		</li>
+	</ul>
+
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+	</script>
+</body>
+</html>

@@ -17,10 +17,10 @@ public interface ISpecimenService {
 	SpecimenDTO fechById(int id);
 
 	/**
-	 * Persist the given DTO
+	 * Persist the given SpecimenDTO
 	 * @param specimenDTO
 	 */
-	boolean save(SpecimenDTO specimenDTO) throws Exception;
+	boolean saveSpecimen(SpecimenDTO specimenDTO) throws Exception;
 
 	/**
 	 * Return a list of plants that contain this String
@@ -32,5 +32,7 @@ public interface ISpecimenService {
 	void setSpecimenDAO(ISpecimenDAO specimenDAO);
 
 	ISpecimenDAO getSpecimenDAO();
+
+	Iterable<SpecimenDTO> fechAllSpecimens() throws Exception;
 
 }

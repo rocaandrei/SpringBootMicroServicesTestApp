@@ -15,6 +15,9 @@ public class SpecimenService implements ISpecimenService {
 
 	@Autowired
 	IPlantDAO plantDAO;
+	
+	@Autowired
+	ISpecimenDAO specimenDAO; 
 
 	@Override
 	public SpecimenDTO fechById(int id) {
@@ -23,8 +26,9 @@ public class SpecimenService implements ISpecimenService {
 	}
 
 	@Override
-	public boolean save(SpecimenDTO specimenDTO) throws Exception {
-		// TODO Auto-generated method stub
+	public boolean saveSpecimen(SpecimenDTO specimenDTO) throws Exception {
+
+		specimenDAO.save(specimenDTO);
 		return false;
 	}
 
@@ -35,6 +39,12 @@ public class SpecimenService implements ISpecimenService {
 	
 		return plants;
 	}  
+	
+	@Override
+	public Iterable<SpecimenDTO> fechAllSpecimens() throws Exception{
+		
+		return specimenDAO.fechAll();
+	}
 
 	@Override
 	public void setSpecimenDAO(ISpecimenDAO specimenDAO) {

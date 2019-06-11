@@ -34,6 +34,16 @@ public class PlantPlacesController {
 		// doar atat trebuie sa faci sa iti populeze campul asta din html Your specimen
 		// is: <p th:text="${specimenDTO}"/>
 		// sa adaugi ca parametru SpecimenDTO specimenDTO
+		
+		try {
+			specimenService.saveSpecimen(specimenDTO);
+		} catch (Exception e) {
+		
+			log.error("Unable to save specimen", e);
+			e.printStackTrace();
+			return "error";
+		}
+		
 		return "start";
 	}
 
@@ -132,7 +142,8 @@ public class PlantPlacesController {
 		
 		model.addObject("plants", plants);
 		if (plants.size() == 0) {
-			log.warn("Received 0 results for search term: " + searchTerm);
+			log.warn(" [al doilea warn] Received 0 results for search term: " + searchTerm);
+			//TODO sa fac aici cumva ca sa imi afiseze si nu mesaj gen: No results for: + searchTerm
 		}
 		log.debug("exiting search-plants");
 		return model;
@@ -154,5 +165,23 @@ public class PlantPlacesController {
 	public String readSustainability() {
 
 		return "sustainability";
+	}
+	
+	@RequestMapping(value = "/show-specimens")
+	public ModelAndView showSpecimens() {
+		ModelAndView model = new ModelAndView();
+		try {
+			//iterabil - adica poate fi iterat intr-un loop
+			Iterable<SpecimenDTO> allSpecimens = specimenService.fechAllSpecimens();
+			model.setViewName("showSpecimens");
+			model.addObject("allSpecimens", allSpecimens);
+			
+		} catch (Exception e) {
+			log.error("Unable to view the specimens", e);
+			model.setViewName("error");
+			e.printStackTrace();
+		}
+
+		return model;
 	}
 }

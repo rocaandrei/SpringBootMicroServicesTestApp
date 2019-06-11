@@ -1,21 +1,47 @@
 //in pachetul DTO - DATA TRANSFER OBJECT - reprezinta locul unde se regasesc clasele Model - POJO Class
+//cu aceste adnotari o sa ne conectam cu tabelul din baza de date
+
 package com.plantplaces.dto;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+
+@Entity
+@Table(name="specimens")
 public class SpecimenDTO {
 
+	//adica specimenId este Key iar valorile sunt autogenerate 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="specimen_id")
 	private int specimenId;
+	@Column(name="latitude")
 	private String latitude;
+	@Column(name="longitude")
 	private String longitude;
+	@Column(name="description")
 	private String description;
+	@Column(name="plant_id")
 	private int plantId;
+	@Column(name="plant_name ")
+	private String plantName; 
 
-	public SpecimenDTO(int specimenId, String latitude, String longitude, String description, int plantId) {
+	
+	public SpecimenDTO(int specimenId, String latitude, String longitude, String description, int plantId, String plantName) {
 		super();
 		this.specimenId = specimenId;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.description = description;
 		this.plantId = plantId;
+		this.plantName = plantName;
 	}
 
 	public SpecimenDTO() {
@@ -27,6 +53,14 @@ public class SpecimenDTO {
 
 	public void setSpecimenId(int specimenId) {
 		this.specimenId = specimenId;
+	}
+	
+	public String  getplantName() {
+		return plantName;
+	}
+
+	public void setplantName(String plantName) {
+		this.plantName = plantName;
 	}
 
 	public String getLatitude() {
@@ -63,8 +97,8 @@ public class SpecimenDTO {
 
 	@Override
 	public String toString() {
-		return "SpecimenDTO [latitude=" + latitude + ", longitude=" + longitude
-				+ ", description=" + description + ", plantId=" + plantId + "]";
+		return "Plant Name: " +plantName+ ", lat: " + latitude + ", long: " + longitude
+				+ ", description: " + description + ", plantId: " + plantId;
 	}
 
 	@Override

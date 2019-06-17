@@ -77,7 +77,7 @@ public class PlantDTO {
 
 	@Override
 	public String toString() {
-		return "id: " + guid + ", Genus: " + (genus.equals("")?"N/A":genus) + ", Spacies: " + (species.equals("")?"N/A":species) + ", Cultivar: " + (cultivar.equals("")?"N/A":cultivar)
+		return "Genus: " + (genus.equals("")?"N/A":genus) + ", Spacies: " + (species.equals("")?"N/A":species) + ", Cultivar: " + (cultivar.equals("")?"N/A":cultivar)
 				+ ", Common: " + (common.equals("")?"N/A":common);
 	}
 	

@@ -1,7 +1,9 @@
 package com.plantplaces.service;
-
+//componenta Service pe langa partea de business logic ne ajuta si in zona de caching - eficientizeaza procesul de returnare date, stocheaza cache pentru un proces mai light
+//cache = performanta mai buna, e mult mai scalabil, mai rapid, mult mai apropiat de user
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 //import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import com.plantplaces.dao.ISpecimenDAO;
 import com.plantplaces.dto.PlantDTO;
 import com.plantplaces.dto.SpecimenDTO;
 
-@Service //asa am vazut ca marchezi o componenta de tip service, sa vad daca imi da eroare... :) Contine business Logic si va agrega diferite DAO (Data Acces Object) pentru a compune aplicatia
+@Service //componenta de tip service
 public class SpecimenService implements ISpecimenService {
 
 	@Autowired
@@ -33,6 +35,7 @@ public class SpecimenService implements ISpecimenService {
 	}
 
 	@Override
+	@Cacheable("fechPlants")
 	public List<PlantDTO> fetchPlants(String searchTerm) throws Exception {
 
 		List<PlantDTO> plants = plantDAO.fetch(searchTerm);

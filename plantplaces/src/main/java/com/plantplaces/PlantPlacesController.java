@@ -16,43 +16,47 @@ import org.springframework.web.servlet.ModelAndView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.plantplaces.dto.LabelValueDTO;
 import com.plantplaces.dto.PlantDTO;
 import com.plantplaces.dto.SpecimenDTO;
 import com.plantplaces.service.ISpecimenService;
 
 @Controller // : eu sunt un controller
 public class PlantPlacesController {
-	
-	//pui logari in cod ca sa vezi cum ruleaza aplicatia, daca iti da erori si daca se comporta cum vrei tu sa se comporte
+
+	// pui logari in cod ca sa vezi cum ruleaza aplicatia, daca iti da erori si daca
+	// se comporta cum vrei tu sa se comporte
 	Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired // zice: gaseste-mi un obiect ce seamana cu mine, este de acelasi tip de date
 	private ISpecimenService specimenService;
+	private List<PlantDTO> allPlants;
+	private String firstThreeCharacters;
 
 	@RequestMapping(value = "/save-specimen", method = RequestMethod.GET)
-	public String saveSpecimen(SpecimenDTO specimenDTO ) {
+	public String saveSpecimen(SpecimenDTO specimenDTO) {
 		// doar atat trebuie sa faci sa iti populeze campul asta din html Your specimen
 		// is: <p th:text="${specimenDTO}"/>
 		// sa adaugi ca parametru SpecimenDTO specimenDTO
-		
+
 		try {
 			specimenService.saveSpecimen(specimenDTO);
 		} catch (Exception e) {
-		
+
 			log.error("Unable to save specimen", e);
 			e.printStackTrace();
 			return "error";
 		}
-		
+
 		return "start";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/start")
 	public String read(Model model) {
-		
-		//mai jos folosim un mesaj de logger
+
+		// mai jos folosim un mesaj de logger
 		log.info("User has entered the /start endpoint");
-		
+
 		model.addAttribute("specimenDTO", new SpecimenDTO());
 		return "start";
 
@@ -107,43 +111,46 @@ public class PlantPlacesController {
 		return "start";
 	}
 
-	//asa imi ruteaza catre html-ul ala facut de mine nopath - inca nu se comporta cum vreau eu, mai merge studiat...
+	// asa imi ruteaza catre html-ul ala facut de mine nopath - inca nu se comporta
+	// cum vreau eu, mai merge studiat...
 	@GetMapping()
-	public String noPath( @RequestParam(required = false) String path) {
+	public String noPath(@RequestParam(required = false) String path) {
 		String requestPath = path;
 		ModelAndView model = new ModelAndView();
 		model.addObject("requestPath", requestPath);
 		model.setViewName("nopath");
-		
+
 		return "nopath";
 	}
 
 	@GetMapping("/search-plants")
-	public ModelAndView searchPlants(@RequestParam(value = "searchTerm", required = false, defaultValue = "") String searchTerm) {
+	public ModelAndView searchPlants(
+			@RequestParam(value = "searchTerm", required = false, defaultValue = "") String searchTerm) {
 
 		log.debug("Entering search-plants");
-		
+
 		ModelAndView model = new ModelAndView();
 		List<PlantDTO> plants = new ArrayList<PlantDTO>();
 		try {
 			plants = specimenService.fetchPlants(searchTerm);
 			model.setViewName("plantResults");// practic asta va fi pagina HTML returnata
-			//o logare de tip warning 
-			if(plants.size() == 0) {
+			// o logare de tip warning
+			if (plants.size() == 0) {
 				log.warn("Received 0 results for search term: " + searchTerm);
 			}
 		} catch (Exception e) {
 
-			//o logare in caz de eroare, daca condl ne intra aici
+			// o logare in caz de eroare, daca condl ne intra aici
 			log.error("Error happend in search-plants endpoint", e);
 			e.printStackTrace();
 			model.setViewName("plantResults");
 		}
-		
+
 		model.addObject("plants", plants);
 		if (plants.size() == 0) {
 			log.warn(" [al doilea warn] Received 0 results for search term: " + searchTerm);
-			//TODO sa fac aici cumva ca sa imi afiseze si nu mesaj gen: No results for: + searchTerm
+			// TODO sa fac aici cumva ca sa imi afiseze si nu mesaj gen: No results for: +
+			// searchTerm
 		}
 		log.debug("exiting search-plants");
 		return model;
@@ -166,16 +173,16 @@ public class PlantPlacesController {
 
 		return "sustainability";
 	}
-	
+
 	@RequestMapping(value = "/show-specimens")
 	public ModelAndView showSpecimens() {
 		ModelAndView model = new ModelAndView();
 		try {
-			//iterabil - adica poate fi iterat intr-un loop
+			// iterabil - adica poate fi iterat intr-un loop
 			Iterable<SpecimenDTO> allSpecimens = specimenService.fechAllSpecimens();
 			model.setViewName("showSpecimens");
 			model.addObject("allSpecimens", allSpecimens);
-			
+
 		} catch (Exception e) {
 			log.error("Unable to view the specimens", e);
 			model.setViewName("error");
@@ -183,5 +190,41 @@ public class PlantPlacesController {
 		}
 
 		return model;
+	}
+
+	@RequestMapping(value = "/plant-names-autocomplete")
+	@ResponseBody // returneaza sub format de tip json - nu view sau altceva
+	public List<LabelValueDTO> plantNamesAutocomplete(@RequestParam(value = "term", required = false, defaultValue = "") String term) {
+		
+		List<LabelValueDTO> suggestions = new ArrayList<LabelValueDTO>();
+
+		try {
+			// actualizam doar cand term introdus exact de 3 caracter - si un fel facem un cached aici pe informatie, daca introducem mai multe caractere continua singur
+			if (term.length() == 3) {
+				firstThreeCharacters = term;
+				allPlants = specimenService.fetchPlants(term);
+			}
+
+			// odata ce avem cuvantul minim de 3 caractere incepem sa iteram prin el pentru
+			// a adauga mai departe cuvintele
+			for (PlantDTO plant : allPlants) {
+				if (plant.toString().contains(term)) {
+
+					LabelValueDTO labVal = new LabelValueDTO();
+					labVal.setLabel(plant.toString());
+					labVal.setValue(Integer.toString(plant.getGuid()));
+
+					suggestions.add(labVal);
+				}
+
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error("Exception in autocmplete", e);
+		}
+
+		return suggestions;
+
 	}
 }
